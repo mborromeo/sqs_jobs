@@ -7,7 +7,26 @@ Introduction goes here.
 Example
 =======
 
-Example goes here.
+ * Enter your AWS access key, secret key and queue name into config/sqsjobs.yml
+ * Start writing your background jobs as this example (put this into app/models/jobs.rb)
+     module Jobs
+       class ComputeMassiveStuffForUser < Struct.new(:user_id)
+         user = User.find(:user_id)
+         user.calculate_recommendations
+       end
+
+       class SendMessageToUser < Struct.new(:user_id, :message)
+         user = User.find(:user_id)
+         user.send_message message
+       end
+     end
+ 
+ * Add jobs to queue as follows:
+     SqsJobs::Queue.enqueue(Jobs::ComputeMassiveStuffForUser.new(3))
+     or
+     SqsJobs::Queue.enqueue(Jobs::SendMessageToUser.new(4, 'Hello from a separate process!'))
+ 
+ * Start/stop/restart jobs workers with script/sqsjob start/stop/restart
 
 
 Copyright (c) 2009 [Marco Borromeo - http://marcoborromeo.com], released under the MIT license
