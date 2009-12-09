@@ -1,8 +1,12 @@
 SqsJobs
 =======
 
-Introduction goes here.
+SqsJobs is an Amazon SQS (http://aws.amazon.com/sqs/) backed job queue for
+Rails applications. 
+SqsJobs is inspired by Delayed_Job (http://github.com/tobi/delayed_job) design.
 
+Install the plugin with script/plugin install git://github.com/mborromeo/sqs_jobs.git 
+and follow the example for setup and jobs creation/consuming.
 
 Example
 =======
