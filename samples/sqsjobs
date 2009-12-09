@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+begin
+  require 'daemons'
+rescue MissingSourceFile
+  STDERR.puts "[SqsJobs] ERROR - This plugin requires the daemons gem. Run `sudo gem install daemons`."
+  exit(1)
+end
+
+dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+daemon_options = {
+  :multiple   => false,
+  :dir_mode   => :normal,
+  :dir        => File.join(dir, 'tmp', 'pids'),
+  :backtrace  => true
+}
+ 
+Daemons.run_proc('sqsjobs_runner', daemon_options) do
+  if ARGV.include?('--')
+    ARGV.slice! 0..ARGV.index('--')
+  else
+    ARGV.clear
+  end
+  
+  Dir.chdir dir
+  RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
+  require File.join('config', 'environment')
+  
+  sqsconfig = YAML.load(File.read(File.join(Rails.root, "config/sqsjobs.yml")))[Rails.env]  
+  SqsJobs::Worker.new(sqsconfig).start
+end

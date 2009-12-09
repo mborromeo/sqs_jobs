@@ -1,0 +1,21 @@
+development:
+  # Enter your aws access key
+  sqs_access_key: 
+  
+  # Enter your aws secret key
+  sqs_secret_key: 
+  
+  # Enter the SQS queue to use (will be created if it doesn't exists)
+  sqs_queue_name: 
+  
+  # Max number to jobs to process at every fetch from SQS
+  sqs_jobs_to_get: 5
+  
+  # IDLE time between SQS checks for new jobs
+  sqs_delay_between_jobs: 5
+  
+  # SQS related optional params
+  # sqs_server_host: queue.amazonaws.com
+  # sqs_server_port: 443
+  # sqs_multi_thread: false
+  # sqs_signature_version: '1'
