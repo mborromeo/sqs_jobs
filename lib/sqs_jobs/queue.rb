@@ -21,7 +21,7 @@ module SqsJobs
       send("sqs_signature_version=", '1') unless params.has_key?('sqs_signature_version')
       send("sqs_logger=", Rails.logger) unless params.has_key?('sqs_logger')
     
-      send("sqs_object=", RightAws::SqsGen2Interface.new(@@sqs_access_key, @@sqs_secret_key, {:server => @@sqs_server_host, :port => @@sqs_server_port, :multi_thread => @@sqs_multi_thread, :signature_version => @@sqs_signature_version, :logger => @@sqs_logger}))
+      send("sqs_object=", Aws::SqsInterface.new(@@sqs_access_key, @@sqs_secret_key, {:server => @@sqs_server_host, :port => @@sqs_server_port, :multi_thread => @@sqs_multi_thread, :signature_version => @@sqs_signature_version, :logger => @@sqs_logger}))
       send("sqs_queue_uri=", @@sqs_object.create_queue(@@sqs_queue_name))
     end
     

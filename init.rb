@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/lib/sqs_jobs'
 
 begin
-  require 'right_aws'
+  require 'aws'
 rescue MissingSourceFile
-  STDERR.puts "[SqsJobs] ERROR - This plugin requires the right_aws gem. Run `sudo gem install right_aws`."
+  STDERR.puts "[SqsJobs] ERROR - This plugin requires the aws gem. Run `sudo gem install aws`."
   exit(1)
 end
 
